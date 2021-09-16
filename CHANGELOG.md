@@ -40,6 +40,15 @@
 #### Other Changes
 
 * [#5](https://github.com/JonathanAquino/changelog-pr/pull/5): Rename config from changelog-pr-config.yml to changelog-pr-config.yaml
+* [#6](https://github.com/JonathanAquino/changelog-pr/pull/6): Update the doc for group_config
+
+
+# 9.9.9
+
+
+#### Other Changes
+
+* [#5](https://github.com/JonathanAquino/changelog-pr/pull/5): Rename config from changelog-pr-config.yml to changelog-pr-config.yaml
 
 
 # Version: 0.8.0
