@@ -11,7 +11,10 @@ inputs:
     default: 'CHANGELOG.md'
   config_file:
     description: 'Location of the config JSON file'
-    required: false
+    required: true
+  branch:
+    description: 'Branch to commit the changelog to'
+    required: true
   committer_username:
     description: 'Username of that user who will commit'
     required: false
