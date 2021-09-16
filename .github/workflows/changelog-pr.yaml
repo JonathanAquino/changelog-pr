@@ -3,9 +3,9 @@ name: Changelog PR
 on:
   push:
     branches:
-      # Run this action when the following branch is pushed to.
+      # Run this action when the following branch is pushed to, typically master or main.
       # Keep this in sync with with.branch below.
-      - master
+      - main
 
 jobs:
   build:
@@ -16,12 +16,12 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Run Changelog PR
-        uses: JonathanAquino/changelog-pr@HEAD   # Normally you should put a version here like @v0.9.0
+        uses: JonathanAquino/changelog-pr@main
         with:
           changelog_filename: CHANGELOG.md
           config_file: changelog-pr-config.yaml
-          # Commit the changelog to this branch.
+          # Commit the changelog to this branch, typically master or main.
           # Keep this in sync with on.push.branches above.
-          branch: master
+          branch: main
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
