@@ -106,6 +106,9 @@ class ChangelogCIBase:
                 f.write('\n\n')
                 f.write(body)
 
+        # TODO: Remove this debug logging
+        subprocess.run(['ssh', '-T', 'git@github.com'])
+
         subprocess.run(['git', 'add', self.filename])
         subprocess.run(
             ['git', 'commit', '-m', '(Changelog PR) Added Changelog']
