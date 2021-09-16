@@ -111,7 +111,7 @@ class ChangelogCIBase:
             ['git', 'commit', '-m', '(Changelog PR) Added Changelog']
         )
         subprocess.run(
-            ['git', 'push', '-u', 'origin', self.current_branch]
+            ['git', 'push', '--force', '-u', 'origin', self.current_branch]
         )
 
     def run(self):
