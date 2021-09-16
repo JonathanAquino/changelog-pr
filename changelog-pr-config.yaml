@@ -1,7 +1,9 @@
 group_config:
   # Use PR labels to add an annotation to the changelog.
   # This list of labels is from https://keepachangelog.com/en/1.0.0/#types
-  # They are sensible defaults, but you may change them if your repo uses different labels.
+  # They are sensible defaults, but you may change them if your repo uses different labels
+  # (for example, breaking-change). The important thing is that they distinguish
+  # between breaking changes, features/enhancements, and bug fixes.
 
   # Added for new features.
   - title: Added
