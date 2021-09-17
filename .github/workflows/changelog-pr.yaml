@@ -1,4 +1,3 @@
-# Workflow for automated changelog generation using JonathanAquino/changelog-pr.
 name: Changelog PR
 
 on:
