@@ -46,7 +46,7 @@ class ChangelogCIBase:
     def get_changes_after_last_release(self):
         return NotImplemented
 
-    def parse_changelog(self, version, changes):
+    def parse_changelog(self, changes):
         return NotImplemented
 
     def _get_file_mode(self):
@@ -119,15 +119,13 @@ class ChangelogCIBase:
 
     def run(self):
         """Entrypoint to the Changelog PR"""
-        version = '9.9.9'
-
         changes = self.get_changes_after_last_release()
 
         # exit the method if there is no changes found
         if not changes:
             return
 
-        string_data = self.parse_changelog(version, changes)
+        string_data = self.parse_changelog(changes)
 
         print_message('Commit Changelog', message_type='group')
         self._commit_changelog(string_data)
@@ -225,7 +223,7 @@ class ChangelogCIPullRequest(ChangelogCIBase):
 
         return items
 
-    def parse_changelog(self, version, changes):
+    def parse_changelog(self, changes):
         return ''.join(
             map(self._get_changelog_line, changes)
         )
