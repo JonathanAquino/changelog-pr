@@ -3,7 +3,7 @@ name: Changelog PR
 on:
   push:
     branches:
-      # Run this action when the default branch is pushed to (typically master or main).
+      # Run this action when the default branch is pushed to (master or main).
       - ${{ github.event.repository.default_branch }}
 
 jobs:
@@ -11,15 +11,39 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checks-out your repository
-      - uses: actions/checkout@v2
+      # Uncomment below if the default branch (master or main) is a protected branch with the
+      # "include administrators" option. We will temporarily disable "include administrators" branch protection,
+      # then we will commit as an admin, then we will re-enable "include administrators" branch protection.
+      # - name: Temporarily disable "include administrators" branch protection
+      #   uses: JonathanAquino/branch-protection-bot@master
+      #   if: always()
+      #   with:
+      #     # This personal access token requires full-repo-access scope.
+      #     access-token: ${{ secrets.PERSONAL_ACCESS_TOKEN_FOR_ADMIN }}
+      #     branch: ${{ github.event.repository.default_branch }}
+      #     enforce_admins: false
+
+      - name: Check-out your repository
+        uses: actions/checkout@v2
+        # Uncomment below if the default branch (master or main) is a protected branch.
+        # with:
+        #   token: ${{ secrets.PERSONAL_ACCESS_TOKEN_FOR_ADMIN }}
 
       - name: Run Changelog PR
         uses: JonathanAquino/changelog-pr@main
         with:
           changelog_filename: CHANGELOG.md
           config_file: changelog-pr-config.yaml
-          # Commit the changelog to the default branch (typically master or main).
+          # Commit the changelog to the default branch (master or main).
           branch: ${{ github.event.repository.default_branch }}
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      # Uncomment below if the default branch is a protected branch with the "include administrators" option.
+      # - name: Enable "include administrators" branch protection
+      #   uses: JonathanAquino/branch-protection-bot@master
+      #   if: always()  # Force to always run this step to ensure "include administrators" is always turned back on
+      #   with:
+      #     access-token: ${{ secrets.PERSONAL_ACCESS_TOKEN_FOR_ADMIN }}
+      #     branch: ${{ github.event.repository.default_branch }}
+      #     enforce_admins: true
