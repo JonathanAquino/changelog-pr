@@ -136,14 +136,34 @@ class ChangelogCIBase:
 class ChangelogCIPullRequest(ChangelogCIBase):
     """Generates and commits changelog using pull requests"""
 
-    @staticmethod
-    def _get_changelog_line(item):
+    def _get_changelog_line(self, item):
         """Generate each line of changelog"""
-        return "* [#{number}]({url}): {title}\n".format(
+        if self._get_pr_label_annotation(item):
+            pr_label_annotation = '[{pr_label_annotation}] '.format(pr_label_annotation=self._get_pr_label_annotation(item))
+        else:
+            pr_label_annotation = ''
+        return "## [#{number}]({url}) ({merge_date})\n- {pr_label_annotation}{title}\n\n".format(
             number=item['number'],
             url=item['url'],
-            title=item['title']
+            title=item['title'],
+            merge_date=item['merged_at'][0:10],
+            pr_label_annotation=pr_label_annotation
         )
+
+    def _get_pr_label_annotation(self, pull_request):
+        """
+        Returns a string to put in the annotation in square brackets before the PR title.
+        """
+        pr_labels = self.config.pr_labels
+        matching_pr_labels = []
+        if not pr_labels:
+            return ''
+        for pr_label in pr_labels:
+            if pr_label in pull_request['labels']:
+                matching_pr_labels.append(pr_label)
+        if not matching_pr_labels:
+            return 'choose PR label: ' + ', '.join(pr_labels)
+        return ', '.join(matching_pr_labels)
 
     def get_changes_after_last_release(self):
         """Get all the merged pull request after latest release"""
@@ -185,6 +205,7 @@ class ChangelogCIPullRequest(ChangelogCIBase):
                         'title': item['title'],
                         'number': item['number'],
                         'url': item['html_url'],
+                        'merged_at': item['closed_at'],
                         'labels': [label['name'] for label in item['labels']]
                     }
                     items.append(data)
@@ -205,62 +226,18 @@ class ChangelogCIPullRequest(ChangelogCIBase):
         return items
 
     def parse_changelog(self, version, changes):
-        """Parse the pull requests data and return a string"""
-        string_data = (
-            '# ' + version + '\n\n'
+        return ''.join(
+            map(self._get_changelog_line, changes)
         )
-
-        group_config = self.config.group_config
-
-        if group_config:
-            for config in group_config:
-
-                if len(changes) == 0:
-                    break
-
-                items_string = ''
-
-                for pull_request in changes:
-                    # check if the pull request label matches with
-                    # any label of the config
-                    if (
-                        any(
-                            label in pull_request['labels']
-                            for label in config['labels']
-                        )
-                    ):
-                        items_string += self._get_changelog_line(pull_request)
-                        # remove the item so that one item
-                        # does not match multiple groups
-                        changes.remove(pull_request)
-
-                if items_string:
-                    string_data += '\n#### ' + config['title'] + '\n\n'
-                    string_data += '\n' + items_string
-
-            if changes:
-                # if they do not match any user provided group
-                # Add items in `Other Changes` group
-                string_data += '\n#### Other Changes\n\n'
-                string_data += ''.join(
-                    map(self._get_changelog_line, changes)
-                )
-        else:
-            # If group config does not exist then append it without and groups
-            string_data += ''.join(
-                map(self._get_changelog_line, changes)
-            )
-
-        return string_data
 
 class ChangelogCIConfiguration:
     """Configuration class for Changelog PR"""
 
-    DEFAULT_GROUP_CONFIG = []
+    DEFAULT_PR_LABELS = []
 
     def __init__(self, config_file):
         # Initialize with default configuration
-        self.group_config = self.DEFAULT_GROUP_CONFIG
+        self.pr_labels = self.DEFAULT_PR_LABELS
 
         self.user_raw_config = self.get_user_config(config_file)
 
@@ -326,64 +303,23 @@ class ChangelogCIConfiguration:
             )
             return
 
-        self.validate_group_config()
+        self.validate_pr_labels()
 
-    def validate_group_config(self):
-        """Validate and set group_config configuration option"""
-        group_config = self.user_raw_config.get('group_config')
+    def validate_pr_labels(self):
+        """Validate and set pr_labels configuration option"""
+        pr_labels = self.user_raw_config.get('pr_labels')
 
-        if not group_config:
-            msg = '`group_config` was not provided'
+        if not pr_labels:
+            msg = '`pr_labels` was not provided'
             print_message(msg, message_type='warning')
             return
 
-        if not isinstance(group_config, list):
-            msg = '`group_config` is not valid, It must be an Array/List.'
+        if not isinstance(pr_labels, list):
+            msg = '`pr_labels` is not valid, It must be an Array/List.'
             print_message(msg, message_type='error')
             return
 
-        for item in group_config:
-            self.validate_group_config_item(item)
-
-    def validate_group_config_item(self, item):
-        """Validate and set group_config item configuration option"""
-        if not isinstance(item, dict):
-            msg = (
-                '`group_config` items must have key, '
-                'value pairs of `title` and `labels`'
-            )
-            print_message(msg, message_type='error')
-            return
-
-        title = item.get('title')
-        labels = item.get('labels')
-
-        if not title or not isinstance(title, str):
-            msg = (
-                '`group_config` item must contain string title, '
-                f'but got `{title}`'
-            )
-            print_message(msg, message_type='error')
-            return
-
-        if not labels or not isinstance(labels, list):
-            msg = (
-                '`group_config` item must contain array of labels, '
-                f'but got `{labels}`'
-            )
-            print_message(msg, message_type='error')
-            return
-
-        if not all(isinstance(label, str) for label in labels):
-            msg = (
-                '`group_config` labels array must be string type, '
-                f'but got `{labels}`'
-            )
-            print_message(msg, message_type='error')
-            return
-
-        self.group_config.append(item)
-
+        self.pr_labels = pr_labels
 
 def print_message(message, message_type=None):
     """Helper function to print colorful outputs in GitHub Actions shell"""

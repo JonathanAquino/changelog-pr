@@ -1,21 +1,13 @@
-group_config:
+# Config for automated changelog generation using JonathanAquino/changelog-pr.
+pr_labels:
   # Use PR labels to add an annotation to the changelog.
   # This list of labels is from https://keepachangelog.com/en/1.0.0/#types
   # They are sensible defaults, but you may change them if your repo uses different labels
-  # (for example, breaking-change). The important thing is that they distinguish
+  # (for example, breaking-changes). The important thing is that they distinguish
   # between breaking changes, features/enhancements, and bug fixes.
-
-  - title: Breaking Changes
-    labels:
-      - breaking-changes
-  - title: New Features/Enhancements
-    labels:
-      - new-feature
-      - enhancement
-  - title: Bug Fixes
-    labels:
-      - bug
+  - breaking-changes
+  - new-feature
+  - enhancement
+  - bug
   # Changes to algorithms or methodologies
-  - title: Implementation Changes
-    labels:
-      - implementation-changes
+  - implementation-changes
