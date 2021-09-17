@@ -94,17 +94,30 @@ class ChangelogCIBase:
         """Write changelog to the changelog file"""
         file_mode = self._get_file_mode()
 
+        header = 'This is an automatically generated changelog by JonathanAquino/changelog-pr.\n'
+        header += 'Ensure that your PRs have one or more of the following labels:\n'
+        header += '{labels}\n'.format(labels=', '.join(self.config.pr_labels))
+        header += 'Last generated on: {last_generated_on}\n'.format(last_generated_on='FOO')
+        do_not_modify_line = 'Do not modify this header.\n\n'
+        header += do_not_modify_line
+
         with open(self.filename, file_mode) as f:
             # read the existing data and store it in a variable
             body = f.read()
             # write at the top of the file
             f.seek(0, 0)
+            f.write(header)
             f.write(string_data)
 
             if body:
-                # re-write the existing data
-                f.write('\n\n')
-                f.write(body)
+                parts = body.split(do_not_modify_line)
+                if len(parts) == 1:
+                    # Header wasn't present (old changelog)
+                    remainder = parts[0]
+                else:
+                    # Header is present
+                    remainder = parts[1]
+                f.write(remainder)
 
         # TODO: Remove this debug logging
         subprocess.run(['ssh', '-T', 'git@github.com'])
