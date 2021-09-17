@@ -5,7 +5,7 @@ on:
   push:
     branches:
       # Run this action when the default branch is pushed to (master or main).
-      - ${{ github.event.repository.default_branch }}
+      - main
 
 jobs:
   build:
@@ -21,7 +21,7 @@ jobs:
       #   with:
       #     # This personal access token requires full-repo-access scope.
       #     access-token: ${{ secrets.PERSONAL_ACCESS_TOKEN_FOR_ADMIN }}
-      #     branch: ${{ github.event.repository.default_branch }}
+      #     branch: main
       #     enforce_admins: false
 
       - name: Check-out your repository
@@ -36,7 +36,7 @@ jobs:
           changelog_filename: CHANGELOG.md
           config_file: changelog-pr-config.yaml
           # Commit the changelog to the default branch (master or main).
-          branch: ${{ github.event.repository.default_branch }}
+          branch: main
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
@@ -46,5 +46,5 @@ jobs:
       #   if: always()  # Force to always run this step to ensure "include administrators" is always turned back on
       #   with:
       #     access-token: ${{ secrets.PERSONAL_ACCESS_TOKEN_FOR_ADMIN }}
-      #     branch: ${{ github.event.repository.default_branch }}
+      #     branch: main
       #     enforce_admins: true
