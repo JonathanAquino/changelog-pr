@@ -1,3 +1,11 @@
+## [#5](https://github.com/JonathanAquino/changelog-pr/pull/5) (2021-09-08)
+- [choose PR label: breaking-changes, new-feature, enhancement, bug, implementation-changes] Rename config from changelog-pr-config.yml to changelog-pr-config.yaml
+
+## [#6](https://github.com/JonathanAquino/changelog-pr/pull/6) (2021-09-08)
+- [choose PR label: breaking-changes, new-feature, enhancement, bug, implementation-changes] Update the doc for group_config
+
+
+
 # 9.9.9
 
 
