@@ -137,7 +137,7 @@ class ChangelogCIPullRequest(ChangelogCIBase):
     """Generates and commits changelog using pull requests"""
 
     def _get_changelog_line(self, item):
-        """Generate each line of changelog"""
+        """Generate each PR block of the changelog"""
         if self._get_pr_label_annotation(item):
             pr_label_annotation = '[{pr_label_annotation}] '.format(pr_label_annotation=self._get_pr_label_annotation(item))
         else:
