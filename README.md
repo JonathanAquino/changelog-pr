@@ -47,6 +47,14 @@ to set a label:
 
 - [ ] Label your PR for the changelog: skip-changelog, breaking-changes, new-feature, enhancement, bug, implementation-changes
 
+## Why Use Changelog PR Over git log?
+
+The main value add of Changelog PR over just using git log is that it shows the all-important
+label (breaking-changes, new-feature, bug, etc.).
+
+You can also get the labels on the GitHub [Pull Requests page](https://github.com/JonathanAquino/changelog-pr/pulls?q=is%3Apr+is%3Amerged+)
+but unfortunately it can't be sorted by merge date, only creation date.
+
 ## Why Use Changelog PR Over Changelog CI?
 
 Changelog PR is a fork of the wonderful [Changelog CI](https://github.com/saadmk11/changelog-ci/)
@@ -54,7 +62,7 @@ GitHub action. The one reason to use Changelog PR over Changelog CI is if your r
 not use SemVer.
 
 If your repo is not SemVer-based (as many APIs are not), Changelog PR is preferred
-because it automatically generates changelogs and assigns a date to them. With Changelog CI,
+because it automatically generates changelogs, assigning a date to each. With Changelog CI,
 you need to add version numbers to your project, you need to remember to run Changelog CI
 every couple of weeks, and when you run it you need to (a) remember all the PRs that were done
 to decide whether it is a major version, minor version, or patch version (b) create an empty
