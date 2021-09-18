@@ -44,7 +44,7 @@ class ChangelogCIBase:
 
         return headers
 
-    def get_changes_after_last_release(self):
+    def get_changes_after_last_changelog_generation(self):
         return NotImplemented
 
     def parse_changelog(self, changes):
@@ -118,7 +118,7 @@ class ChangelogCIBase:
 
     def run(self):
         """Entrypoint to the Changelog PR"""
-        changes = self.get_changes_after_last_release()
+        changes = self.changelog_generation()
 
         # exit the method if there is no changes found
         if not changes:
@@ -165,14 +165,14 @@ class ChangelogCIPullRequest(ChangelogCIBase):
             return 'choose PR label: ' + ', '.join(pr_labels)
         return ', '.join(matching_pr_labels)
 
-    def get_changes_after_last_release(self):
-        """Get all the merged pull request after latest release"""
-        previous_release_date = self._get_last_generated_on()
+    def changelog_generation(self):
+        """Get all the merged pull request after the changelog was last generated."""
+        last_generated_on = self._get_last_generated_on()
 
-        if previous_release_date:
-            merged_date_filter = 'merged:>=' + previous_release_date
+        if last_generated_on:
+            merged_date_filter = 'merged:>=' + last_generated_on
         else:
-            # if there is no release for the repo then
+            # if the changelog hasn't been generated yet then
             # do not filter by merged date
             merged_date_filter = ''
 
@@ -213,7 +213,7 @@ class ChangelogCIPullRequest(ChangelogCIBase):
             else:
                 msg = (
                     f'There was no pull request '
-                    f'made on {self.repository} after last release.'
+                    f'made on {self.repository} after last_generated_on.'
                 )
                 print_message(msg, message_type='error')
         else:
