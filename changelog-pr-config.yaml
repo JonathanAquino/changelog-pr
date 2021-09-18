@@ -1,10 +1,14 @@
 # Config for automated changelog generation using JonathanAquino/changelog-pr.
+
+# PRs with this label won't be added to the changelog.
+skip_changelog_label: skip-changelog
+
+# Use PR labels to add an annotation to the changelog.
+# This list of labels is from https://keepachangelog.com/en/1.0.0/#types
+# They are sensible defaults, but you may change them if your repo uses different labels
+# (for example, breaking-changes). The important thing is that they distinguish
+# between breaking changes, features/enhancements, and bug fixes.
 pr_labels:
-  # Use PR labels to add an annotation to the changelog.
-  # This list of labels is from https://keepachangelog.com/en/1.0.0/#types
-  # They are sensible defaults, but you may change them if your repo uses different labels
-  # (for example, breaking-changes). The important thing is that they distinguish
-  # between breaking changes, features/enhancements, and bug fixes.
   - breaking-changes
   - new-feature
   - enhancement
