@@ -135,6 +135,9 @@ class ChangelogCIPullRequest(ChangelogCIBase):
 
     def _get_changelog_line(self, item):
         """Generate each PR block of the changelog"""
+        if self.config.skip_changelog_label in item['labels']:
+            print_message('Skipping changelog for #{number}'.format(number=item['number']))
+            return ''
         if self._get_pr_label_annotation(item):
             pr_label_annotation = '[{pr_label_annotation}] '.format(pr_label_annotation=self._get_pr_label_annotation(item))
         else:
