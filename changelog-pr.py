@@ -64,32 +64,16 @@ class ChangelogCIBase:
 
         return file_mode
 
-    def _get_latest_release_date(self):
-        """Using GitHub API gets latest release date"""
-        url = (
-            '{base_url}/repos/{repo_name}/releases/latest'
-        ).format(
-            base_url=self.github_api_url,
-            repo_name=self.repository
-        )
-
-        response = requests.get(url, headers=self._get_request_headers)
-
-        published_date = ''
-
-        if response.status_code == 200:
-            response_data = response.json()
-            # get the published date of the latest release
-            published_date = response_data['published_at']
-        else:
-            # if there is no previous release API will return 404 Not Found
-            msg = (
-                f'Could not find any previous release for '
-                f'{self.repository}, status code: {response.status_code}'
-            )
-            print_message(msg, message_type='warning')
-
-        return published_date
+    def _get_last_generated_on(self):
+        """Returns the date that the changelog was last generated"""
+        if not os.path.exists(self.filename):
+            return ''
+        with open(self.filename, 'r') as f:
+            changelog = f.read()
+        matches = re.search('Last generated on: (.*)', x)
+        if not matches:
+            return ''
+        return matches.group(1)
 
     def _commit_changelog(self, string_data):
         """Write changelog to the changelog file"""
@@ -180,7 +164,7 @@ class ChangelogCIPullRequest(ChangelogCIBase):
 
     def get_changes_after_last_release(self):
         """Get all the merged pull request after latest release"""
-        previous_release_date = self._get_latest_release_date()
+        previous_release_date = self._get_last_generated_on()
 
         if previous_release_date:
             merged_date_filter = 'merged:>=' + previous_release_date
@@ -202,6 +186,7 @@ class ChangelogCIPullRequest(ChangelogCIBase):
             repo_name=self.repository,
             merged_date_filter=merged_date_filter
         )
+        print_message('URL: {url}'.format(url=url))
 
         items = []
 
