@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import os
 import re
@@ -175,8 +175,10 @@ class ChangelogCIPullRequest(ChangelogCIBase):
             merged_date_filter = 'merged:>=' + last_generated_on
         else:
             # if the changelog hasn't been generated yet then
-            # do not filter by merged date
-            merged_date_filter = ''
+            # take PRs generated in the last 15 minutes - that should get
+            # the current PR.
+            min_date = (datetime.utcnow() - timedelta(minutes=15)).strftime('%Y-%m-%dT%H:%M:%SZ')
+            merged_date_filter = 'merged:>=' + min_date
 
         url = (
             '{base_url}/search/issues'
