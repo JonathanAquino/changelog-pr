@@ -70,7 +70,7 @@ class ChangelogCIBase:
             return ''
         with open(self.filename, 'r') as f:
             changelog = f.read()
-        matches = re.search('Last generated on: (.*)', x)
+        matches = re.search('Last generated on: (.*)', changelog)
         if not matches:
             return ''
         return matches.group(1)
