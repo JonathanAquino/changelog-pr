@@ -1,9 +1,12 @@
 This is an automatically generated changelog by JonathanAquino/changelog-pr.
 Ensure that your PRs have one or more of the following labels:
 breaking-changes, new-feature, enhancement, bug, implementation-changes.
-Last generated on: 2021-09-18T04:16:27Z
+Last generated on: 2021-09-18T04:32:42Z
 
 --- DO NOT MODIFY THIS HEADER ---
+
+## [#14](https://github.com/JonathanAquino/changelog-pr/pull/14) (2021-09-18)
+- [breaking-changes] Implement pr_title_removal_regex
 
 ## [#13](https://github.com/JonathanAquino/changelog-pr/pull/13) (2021-09-18)
 - [enhancement] Modify the formatting of the changelog header
