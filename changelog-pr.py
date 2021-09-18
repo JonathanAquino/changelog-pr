@@ -142,10 +142,12 @@ class ChangelogCIPullRequest(ChangelogCIBase):
             pr_label_annotation = '[{pr_label_annotation}] '.format(pr_label_annotation=self._get_pr_label_annotation(item))
         else:
             pr_label_annotation = ''
+        title = item['title']
+        title = re.sub(self.config.pr_title_removal_regex, '', title, flags=re.IGNORECASE)
         return "## [#{number}]({url}) ({merge_date})\n- {pr_label_annotation}{title}\n\n".format(
             number=item['number'],
             url=item['url'],
-            title=item['title'],
+            title=title,
             merge_date=item['merged_at'][0:10],
             pr_label_annotation=pr_label_annotation
         )
@@ -240,6 +242,7 @@ class ChangelogCIConfiguration:
         # Initialize with default configuration
         self.pr_labels = self.DEFAULT_PR_LABELS
         self.skip_changelog_label = None
+        self.pr_title_removal_regex = None
         self.user_raw_config = self.get_user_config(config_file)
 
         self.validate_configuration()
@@ -306,6 +309,7 @@ class ChangelogCIConfiguration:
 
         self.validate_pr_labels()
         self.skip_changelog_label = self.user_raw_config.get('skip_changelog_label')
+        self.pr_title_removal_regex = self.user_raw_config.get('pr_title_removal_regex')
 
     def validate_pr_labels(self):
         """Validate and set pr_labels configuration option"""
