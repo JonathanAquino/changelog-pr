@@ -93,8 +93,9 @@ Changelog PR has some drawbacks that you might want to know:
    you merge your PR.
 5. Also if your main/master branch is protected, you'll see in [changelog-pr.yaml](https://github.com/JonathanAquino/changelog-pr/blob/main/.github/workflows/changelog-pr.yaml)
    that we ask you to use a Personal Access Token for an admin user. Unfortunately Changelog PR
-   will run twice after you merge your PR: once for the PR merge and once for the changelog commit.
-   For the regular GITHUB_TOKEN, GitHub Actions is smart enough to not trigger a new action.
+   will run twice after you merge your PR: once triggered by the PR merge and once triggered by
+   the changelog commit. For the regular GITHUB_TOKEN, GitHub Actions is smart enough to not
+   trigger a new action.
 
 ## Acknowledgements
 
