@@ -3,6 +3,9 @@
 # PRs with this label won't be added to the changelog.
 skip_changelog_label: skip-changelog
 
+# These patterns will be removed from the PR title (case-insensitive).
+pr_title_removal_regex: '\[wip\]\s*'
+
 # Use PR labels to add an annotation to the changelog.
 # This list of labels is from https://keepachangelog.com/en/1.0.0/#types
 # They are sensible defaults, but you may change them if your repo uses different labels
