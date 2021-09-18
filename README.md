@@ -72,7 +72,7 @@ PR titled Release 1.2.3 to trigger Changelog CI.
 
 If your repo uses SemVer, you're better off using a GitHub action that can handle SemVer,
 like [Changelog CI](https://github.com/saadmk11/changelog-ci/) (or writing your changelog manually).
-If it does not, you're better off using Changelog PR (see Why Use Changelog PR? above).
+If it does not, it's better to use Changelog PR (see Why Use Changelog PR? above).
 
 ## Caveats To Using Changelog PR
 
