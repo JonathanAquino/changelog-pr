@@ -4,7 +4,7 @@ name: Changelog PR
 on:
   push:
     branches:
-      # Run this action when the default branch is pushed to.
+      # Run this workflow when the default branch is pushed to.
       - main     # Set to your default branch (master or main)
 
 jobs:

@@ -1,266 +1,92 @@
-![Changelog PR Banner](https://i.imgur.com/72lxPjs.png)
+![Changelog PR Banner](https://i.imgur.com/f5k5sTw.png)
 
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/JonathanAquino/changelog-pr?style=flat-square)](https://github.com/JonathanAquino/changelog-pr/releases/latest)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/JonathanAquino/changelog-pr/Changelog%20CI?label=Changelog%20CI&style=flat-square)
 [![GitHub](https://img.shields.io/github/license/JonathanAquino/changelog-pr?style=flat-square)](https://github.com/JonathanAquino/changelog-pr/blob/master/LICENSE)
-[![GitHub Marketplace](https://img.shields.io/badge/Get%20It-on%20Marketplace-orange?style=flat-square)](https://github.com/marketplace/actions/changelog-pr)
-[![GitHub stars](https://img.shields.io/github/stars/JonathanAquino/changelog-pr?color=success&style=flat-square)](https://github.com/JonathanAquino/changelog-pr/stargazers)
 
 ## What is Changelog PR?
 
 Changelog PR is a GitHub Action that enables a project to utilize an
-automatically generated changelog.
+automatically generated changelog. Unlike similar GitHub Actions, this tool
+does not require the repo to implement SemVer - instead, each changelog entry
+has a date. This can be useful for APIs which, unlike libraries, may not use SemVer.
 
-The workflow can be configured to perform **any (or all)** of the following actions
+The changelog looks like this:
 
-* **Generate** changelog using **Pull Request** or **Commit Messages**.
+## [#15](https://github.com/JonathanAquino/changelog-pr/pull/15) (2021-09-18)
+- [enhancement] Include the skip_changelog_label in the instructional text for choosing a PR label
 
-* **Prepend** the generated changelog to the `CHANGELOG.md` file and then **Commit** modified `CHANGELOG.md` file to the release pull request.
+## [#14](https://github.com/JonathanAquino/changelog-pr/pull/14) (2021-09-18)
+- [breaking-changes] Implement pr_title_removal_regex
 
-## How Does It Work:
+## [#13](https://github.com/JonathanAquino/changelog-pr/pull/13) (2021-09-18)
+- [enhancement] Modify the formatting of the changelog header
 
-Changelog PR uses `python` and `GitHub API` to generate changelog for a
-repository. First, it tries to get the `latest release` from the repository (If
-available). Then, it checks all the **pull requests** / **commits** merged after the last release
-using the GitHub API. After that, it parses the data and generates
-the `changelog`. Finally, It writes the generated changelog at the beginning of
-the `CHANGELOG.md` (or user-provided filename) file. In addition to that, if a
-user provides a config (JSON/YAML file), Changelog PR parses the user-provided config
-file and renders the changelog according to users config. Then the changes
-are **committed** to the release Pull request.
+## How Does It Work?
 
-## Usage:
+Changelog PR uses `python` and the `GitHub API` to generate the changelog for a
+repository. When a PR is merged to main/master, the action runs. First, it reads
+the Last Generated On date from the changelog header. Then, it fetches the pull
+requests merged after that date using the GitHub API. After that, it applies the
+rules from the config for adding labels like "breaking-changes", removing parts
+of the PR title like "[WIP]", or even skipping the PR if it has the "skip-changelog"
+label. Finally, it writes the generated changelog at the beginning of
+the `CHANGELOG.md` (or user-provided filename) file and commits it to main/master.
 
-To use this Action The pull **request title** must match with the
-default `regex`
-or the user-provided `regex` from the config file.
-
-**Default Title Regex:** `^(?i:release)` (title must start with the word "
-release" (case-insensitive))
-
-**Default Version Number Regex:** This Regex will be checked against a Pull
-Request title. This follows [`SemVer`](https://regex101.com/r/Ly7O1x/3/) (
-Semantic Versioning) pattern. e.g. `1.0.0`, `1.0`, `v1.0.1` etc.
-
-For more details on **Semantic Versioning pattern** go to this
-link: https://regex101.com/r/Ly7O1x/3/
-
-**Note:** You can use a custom regular expression to parse your changelog adding
-one to the optional configuration file. To learn more, see
-[Using an optional configuration file](#using-an-optional-configuration-file).
-
-To integrate `Changelog PR` with your repositories Actions, Put this step inside
-your `.github/workflows/workflow.yml` file:
-
-```yaml
-- name: Run Changelog PR
-    uses: JonathanAquino/changelog-pr@v0.8.0
-    with:
-      # Optional, you can provide any name for your changelog file,
-      # defaults to `CHANGELOG.md` if not provided.
-      changelog_filename: MY_CHANGELOG.md
-      # Optional, only required when you want more customization
-      # e.g: group your changelog by labels with custom titles,
-      # different version prefix, pull request title and version number regex etc.
-      # config file can be in JSON or YAML format.
-      config_file: changelog-pr-config.json
-      # Optional, This will be used to configure git
-      # defaults to `github-actions[bot]` if not provided.
-      committer_username: 'test'
-      committer_email: 'test@test.com'
-    env:
-      # optional, only required for `private` repositories
-      GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-```
-
-**Changelog PR Badge:**
-
-```markdown
-![Changelog PR Status](https://github.com/<username>/<repository>/workflows/Changelog%20CI/badge.svg)
-```
-
-**Output:**
-
-![Changelog PR Status](https://github.com/JonathanAquino/changelog-pr/workflows/Changelog%20CI/badge.svg)
-
-## Configuration
-
-### Using an optional configuration file
-
-Changelog PR is will run perfectly fine without including a configuration file.
-If a user seeks to modify the default behaviors of Changelog PR, they can do so
-by adding a `JSON` or `YAML` config file to the project. For example:
-
-* Including `JSON` file `changelog-pr-config.json`:
-
-    ```yaml
-    with:
-      config_file: changelog-pr-config.json
-    ```
-
-* Including `YAML` file `changelog-pr-config.yaml`:
-
-    ```yaml
-    with:
-      config_file: changelog-pr-config.yaml
-    ```
-
-### Valid options
-
-* `group_config`
-  By adding this you can group changelog items by your repository labels with
-  custom titles.
-
-[See this example output with group_config](#example-changelog-output-using-config-file)
-
-[See this example output without group_config](#example-changelog-output-without-using-config-file)
-
-### Example Config File
-
-Written in JSON:
-
-```json
-{
-  "group_config": [
-    {
-      "title": "Bug Fixes",
-      "labels": ["bug", "bugfix"]
-    },
-    {
-      "title": "Code Improvements",
-      "labels": ["improvements", "enhancement"]
-    },
-    {
-      "title": "New Features",
-      "labels": ["feature"]
-    },
-    {
-      "title": "Documentation Updates",
-      "labels": ["docs", "documentation", "doc"]
-    }
-  ]
-}
-```
+## Installation
 
-Written in YAML:
+1. To install this action, you need to copy the following two files into
+the same places in your repo:
 
-```yaml
-group_config:
-  - title: Bug Fixes
-    labels:
-      - bug
-      - bugfix
-  - title: Code Improvements
-    labels:
-      - improvements
-      - enhancement
-  - title: New Features
-    labels:
-      - feature
-  - title: Documentation Updates
-    labels:
-      - docs
-      - documentation
-      - doc
-```
+- [.github/workflows/changelog-pr.yaml](https://github.com/JonathanAquino/changelog-pr/blob/main/.github/workflows/changelog-pr.yaml)
+- [changelog-pr-config.yaml](https://github.com/JonathanAquino/changelog-pr/blob/main/changelog-pr-config.yaml)
 
-**[Click here to see the example output using this config](#example-changelog-output-using-config-file)**
+2. Follow the instructions in those files for additional configuration information.
 
+3. Add a line to your pull request template (pull_request_template.md) to remind people
+to set a label:
 
-## Example Workflow
+- [ ] Label your PR for the changelog: skip-changelog, breaking-changes, new-feature, enhancement, bug, implementation-changes
 
-```yaml
-name: Changelog PR
+## Why Use Changelog PR Over Changelog CI?
 
-# Controls when the action will run. Triggers the workflow on a pull request
-on:
-  pull_request:
-    types: [ opened, reopened ]
+Changelog PR is a fork of the wonderful [Changelog CI](https://github.com/saadmk11/changelog-ci/)
+GitHub action. The one reason to use Changelog PR over Changelog CI is if your repo does
+not use SemVer.
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+If your repo is not SemVer-based (as many APIs are not), Changelog PR is preferred
+because it automatically generates changelogs and assigns a date to them. With Changelog CI,
+you need to add version numbers to your project, you need to remember to run Changelog CI
+every couple of weeks, and when you run it you need to (a) remember all the PRs that were done
+to decide whether it is a major version, minor version, or patch version (b) create an empty
+PR titled Release 1.2.3 to trigger Changelog CI.
 
-    steps:
-      # Checks-out your repository
-      - uses: actions/checkout@v2
+## When Not To Use Changelog PR
 
-      - name: Run Changelog PR
-        uses: JonathanAquino/changelog-pr@v0.8.0
-        with:
-          changelog_filename: CHANGELOG.md
-          config_file: changelog-pr-config.json
-        # Add this if you are using it on a private repository
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-```
+If your repo uses SemVer, you're better off using a GitHub action that can handle SemVer,
+like https://github.com/saadmk11/changelog-ci/ (or writing your changelog manually).
+If it does not, you're better off using Changelog PR (see Why Use Changelog PR? above).
 
-## Changelog PR in Action (Commit)
-![Changelog PR](https://user-images.githubusercontent.com/24854406/93024522-1844d180-f619-11ea-9c25-57b4e95b822b.gif)
+## Caveats To Using Changelog PR
 
+Changelog PR has some drawbacks that you might want to know:
 
-# Example Changelog Output using config file (Pull Request):
+1. The dates are in the UTC timezone. If you want a different timezone, you can fork this
+   project and update the code.
+2. In the rare case where two PRs are merged at the same time, there may be a race condition
+   where one of the Changelog PR runs will fail to update the changelog.
+3. Changelog PR queries the GitHub API for all merged PRs since the last run. If you are
+   merging PRs to a feature branch, those PRs will be included in the changelog on the default
+   branch.
+4. You'll see in the instructions in [changelog-pr.yaml](https://github.com/JonathanAquino/changelog-pr/blob/main/.github/workflows/changelog-pr.yaml)
+   that, if your main/master branch is protected, we use branch-protection-bot to turn off
+   Include Administrators from branch protection temporarily while Changelog PR runs.
+   This means that the branch will not be protected from admins for about a minute after
+   you merge your PR.
+5. Also if your main/master branch is protected, you'll see in [changelog-pr.yaml](https://github.com/JonathanAquino/changelog-pr/blob/main/.github/workflows/changelog-pr.yaml)
+   that we ask you to use a Personal Access Token for an admin user. Unfortunately Changelog PR
+   will run twice after you merge your PR: once for the PR merge and once for the changelog commit.
+   For the regular GITHUB_TOKEN, GitHub Actions is smart enough to not trigger a new action.
 
-## Version: v2.1.0 (02-25-2020)
+## Acknowledgements
 
-#### Bug Fixes
-
-* [#53](https://github.com/test/test/pull/57): Keep updating the readme
-* [#54](https://github.com/test/test/pull/56): Again updating the Same Readme file
-
-#### New Features
-
-* [#68](https://github.com/test/test/pull/68): Update README.md
-
-#### Documentation Updates
-
-* [#66](https://github.com/test/test/pull/66): Docs update
-
-
-## Version: v1.1.0 (01-01-2020)
-
-#### Bug Fixes
-
-* [#53](https://github.com/test/test/pull/57): Keep updating the readme
-* [#54](https://github.com/test/test/pull/56): Again updating the Same Readme file
-
-#### Documentation Updates
-
-* [#66](https://github.com/test/test/pull/66): Docs update
-
-# Example Changelog Output using config file (Commit Messages):
-
-## Version: v2.1.0 (02-25-2020)
-
-* [123456](https://github.com/test/test/commit/9bec2dbdsgfsdf8b4de11edb): Keep updating the readme
-* [123456](https://github.com/test/test/commit/9bec2dbdsgfsdf8b4de11edb): Again updating the Same Readme file
-* [123456](https://github.com/test/test/commit/9bec2dbdsgfsdf8b4de11edb): Update README.md
-* [123456](https://github.com/test/test/commit/9bec2dbdsgfsdf8b4de11edb): Docs update
-
-
-## Version: v1.1.0 (01-01-2020)
-
-* [123456](https://github.com/test/test/commit/9bec2dbdsgfsdf8b4de11edb): Keep updating the readme
-* [123456](https://github.com/test/test/commit/9bec2dbdsgfsdf8b4de11edb): Again updating the Same Readme file
-* [123456](https://github.com/test/test/commit/9bec2dbdsgfsdf8b4de11edb): Docs update
-
-# Example Changelog Output without using config file:
-
-## Version: 0.0.2
-
-* [#53](https://github.com/test/test/pull/57): Keep updating the readme
-* [#54](https://github.com/test/test/pull/56): Again updating the Same Readme file
-* [#55](https://github.com/test/test/pull/55): README update
-
-
-## Version: 0.0.1
-
-* [#43](https://github.com/test/test/pull/43): It feels like testing never ends
-* [#35](https://github.com/test/test/pull/35): Testing again and again
-* [#44](https://github.com/test/test/pull/44): This is again another test, getting tired
-* [#37](https://github.com/test/test/pull/37): This is again another test
-
-
-# License
-
-The code in this project is released under the [MIT License](LICENSE).
+This project is a fork of the excellent [Changelog CI](https://github.com/saadmk11/changelog-ci/) project.
