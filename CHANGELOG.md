@@ -6,7 +6,7 @@ Last generated on: 2021-09-18T06:29:21Z
 --- DO NOT MODIFY THIS HEADER ---
 
 ## [#19](https://github.com/JonathanAquino/changelog-pr/pull/19) (2021-09-18)
-- [choose PR label: skip-changelog, breaking-changes, new-feature, enhancement, bug, implementation-changes] If there is no changelog yet, get PRs merged in the last 15 minutes
+- [enhancement] If there is no changelog yet, get PRs merged in the last 15 minutes
 
 ## [#15](https://github.com/JonathanAquino/changelog-pr/pull/15) (2021-09-18)
 - [enhancement] Include the skip_changelog_label in the instructional text for choosing a PR label
