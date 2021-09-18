@@ -1,4 +1,4 @@
-![Changelog PR Banner](https://i.imgur.com/f5k5sTw.png)
+![Changelog PR Banner](https://i.imgur.com/yG3jY23.jpg)
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/JonathanAquino/changelog-pr/Changelog%20CI?label=Changelog%20CI&style=flat-square)
 [![GitHub](https://img.shields.io/github/license/JonathanAquino/changelog-pr?style=flat-square)](https://github.com/JonathanAquino/changelog-pr/blob/master/LICENSE)
