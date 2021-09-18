@@ -47,6 +47,9 @@ to set a label:
 
 - [ ] Label your PR for the changelog: skip-changelog, breaking-changes, new-feature, enhancement, bug, implementation-changes
 
+If all is well, your next PR merge should result in a new action appearing in your repo's
+Actions tab in GitHub.
+
 ## Why Use Changelog PR Over git log?
 
 The main value add of Changelog PR over just using git log is that it shows the all-important
