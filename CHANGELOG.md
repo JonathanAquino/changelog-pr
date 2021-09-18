@@ -1,9 +1,12 @@
 This is an automatically generated changelog by JonathanAquino/changelog-pr.
 Ensure that your PRs have one or more of the following labels:
 breaking-changes, new-feature, enhancement, bug, implementation-changes.
-Last generated on: 2021-09-18T04:32:42Z
+Last generated on: 2021-09-18T04:38:31Z
 
 --- DO NOT MODIFY THIS HEADER ---
+
+## [#15](https://github.com/JonathanAquino/changelog-pr/pull/15) (2021-09-18)
+- [choose PR label: skip-changelog, breaking-changes, new-feature, enhancement, bug, implementation-changes] Include the skip_changelog_label in the instructional text for choosing a PR label
 
 ## [#14](https://github.com/JonathanAquino/changelog-pr/pull/14) (2021-09-18)
 - [breaking-changes] Implement pr_title_removal_regex
