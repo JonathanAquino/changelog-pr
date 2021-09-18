@@ -40,7 +40,7 @@ the same places in your repo:
 - [.github/workflows/changelog-pr.yaml](https://github.com/JonathanAquino/changelog-pr/blob/main/.github/workflows/changelog-pr.yaml)
 - [changelog-pr-config.yaml](https://github.com/JonathanAquino/changelog-pr/blob/main/changelog-pr-config.yaml)
 
-2. Follow the instructions in those files for additional configuration information.
+2. Follow the instructions in those files to tweak them.
 
 3. Add a line to your pull request template (pull_request_template.md) to remind people
 to set a label:
