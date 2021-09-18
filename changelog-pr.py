@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 import os
 import re
@@ -94,11 +95,12 @@ class ChangelogCIBase:
         """Write changelog to the changelog file"""
         file_mode = self._get_file_mode()
 
+        last_generated_on = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
         header = 'This is an automatically generated changelog by JonathanAquino/changelog-pr.\n'
         header += 'Ensure that your PRs have one or more of the following labels:\n'
         header += '{labels}\n'.format(labels=', '.join(self.config.pr_labels))
-        header += 'Last generated on: {last_generated_on}\n'.format(last_generated_on='FOO')
-        do_not_modify_line = 'Do not modify this header.\n\n'
+        header += 'Last generated on: {last_generated_on}\n'.format(last_generated_on=last_generated_on)
+        do_not_modify_line = '--- DO NOT MODIFY THIS HEADER ---\n\n'
         header += do_not_modify_line
 
         with open(self.filename, file_mode) as f:
