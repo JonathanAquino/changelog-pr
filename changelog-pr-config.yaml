@@ -10,9 +10,10 @@ pr_title_removal_regex: '\[wip\]\s*'
 # if your repo uses different labels. The important thing is that they
 # distinguish between breaking changes, features/enhancements, and bug fixes.
 pr_labels:
+  # You might want to comment out this label for UI repos.
   - breaking-changes
   - new-feature
   - enhancement
   - bug
-  # Changes to algorithms or methodologies
+  # Add a description to this label on GitHub: "Changes to algorithms or methodologies"
   - implementation-changes
