@@ -1,8 +1,12 @@
 This is an automatically generated changelog by JonathanAquino/changelog-pr.
 Ensure that your PRs have one or more of the following labels:
-breaking-changes, new-feature, enhancement, bug, implementation-changes
-Last generated on: 2021-09-18T04:12:31Z
+breaking-changes, new-feature, enhancement, bug, implementation-changes.
+Last generated on: 2021-09-18T04:16:27Z
+
 --- DO NOT MODIFY THIS HEADER ---
+
+## [#13](https://github.com/JonathanAquino/changelog-pr/pull/13) (2021-09-18)
+- [enhancement] Modify the formatting of the changelog header
 
 ## [#11](https://github.com/JonathanAquino/changelog-pr/pull/11) (2021-09-18)
 - [enhancement] Move checkout step before the disable-branch-protection step to lessen the time that branch protection is disabled
