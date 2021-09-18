@@ -71,7 +71,7 @@ PR titled Release 1.2.3 to trigger Changelog CI.
 ## When Not To Use Changelog PR
 
 If your repo uses SemVer, you're better off using a GitHub action that can handle SemVer,
-like https://github.com/saadmk11/changelog-ci/ (or writing your changelog manually).
+like [Changelog CI](https://github.com/saadmk11/changelog-ci/) (or writing your changelog manually).
 If it does not, you're better off using Changelog PR (see Why Use Changelog PR? above).
 
 ## Caveats To Using Changelog PR
@@ -80,8 +80,9 @@ Changelog PR has some drawbacks that you might want to know:
 
 1. The dates are in the UTC timezone. If you want a different timezone, you can fork this
    project and update the code.
-2. In the rare case where two PRs are merged at the same time, there may be a race condition
-   where one of the Changelog PR runs will fail to update the changelog.
+2. When two PRs are merged at roughly the same time, there may be a race condition
+   where one of the Changelog PR runs will fail to update the changelog. It should be OK
+   because the successful run should be able to query both PRs.
 3. Changelog PR queries the GitHub API for all merged PRs since the last run. If you are
    merging PRs to a feature branch, those PRs will be included in the changelog on the default
    branch.
