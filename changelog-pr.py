@@ -164,7 +164,7 @@ class ChangelogCIPullRequest(ChangelogCIBase):
             if pr_label in pull_request['labels']:
                 matching_pr_labels.append(pr_label)
         if not matching_pr_labels:
-            return 'choose PR label: ' + ', '.join(pr_labels)
+            return 'choose PR label: ' + self.config.skip_changelog_label + ', ' + ', '.join(pr_labels)
         return ', '.join(matching_pr_labels)
 
     def changelog_generation(self):
