@@ -1,6 +1,6 @@
 name: Changelog PR
 description: Changelog PR is a GitHub Action that generates changelog, then it is committed to the release pull request.
-author: Maksudul Haque
+author: Jonathan Aquino
 branding:
   icon: 'clock'
   color: 'blue'
