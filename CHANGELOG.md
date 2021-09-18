@@ -1,8 +1,14 @@
 This is an automatically generated changelog by JonathanAquino/changelog-pr.
 Ensure that your PRs have one or more of the following labels:
 breaking-changes, new-feature, enhancement, bug, implementation-changes
-Last generated on: 2021-09-18T00:04:16Z
+Last generated on: 2021-09-18T00:26:21Z
 --- DO NOT MODIFY THIS HEADER ---
+
+## [#7](https://github.com/JonathanAquino/changelog-pr/pull/7) (2021-09-18)
+- [enhancement] Only grab PRs after the last changelog generation date
+
+## [#8](https://github.com/JonathanAquino/changelog-pr/pull/8) (2021-09-18)
+- [choose PR label: breaking-changes, new-feature, enhancement, bug, implementation-changes] Fix incorrect variable name
 
 ## [#5](https://github.com/JonathanAquino/changelog-pr/pull/5) (2021-09-08)
 - [choose PR label: breaking-changes, new-feature, enhancement, bug, implementation-changes] Rename config from changelog-pr-config.yml to changelog-pr-config.yaml
