@@ -12,6 +12,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check-out your repository
+        uses: actions/checkout@v2
+        # Uncomment below if the default branch (master or main) is a protected branch.
+        # with:
+        #   # This personal access token requires full-repo-access scope.
+        #   token: ${{ secrets.PERSONAL_ACCESS_TOKEN_FOR_ADMIN }}
+
       # Uncomment below if the default branch (master or main) is a protected branch with the
       # "include administrators" option. We will temporarily disable "include administrators" branch protection,
       # then we will commit as an admin, then we will re-enable "include administrators" branch protection.
@@ -23,12 +30,6 @@ jobs:
       #     access-token: ${{ secrets.PERSONAL_ACCESS_TOKEN_FOR_ADMIN }}
       #     branch: main     # Set to your default branch (master or main)
       #     enforce_admins: false
-
-      - name: Check-out your repository
-        uses: actions/checkout@v2
-        # Uncomment below if the default branch (master or main) is a protected branch.
-        # with:
-        #   token: ${{ secrets.PERSONAL_ACCESS_TOKEN_FOR_ADMIN }}
 
       - name: Run Changelog PR
         uses: JonathanAquino/changelog-pr@main
