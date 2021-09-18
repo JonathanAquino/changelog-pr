@@ -239,7 +239,7 @@ class ChangelogCIConfiguration:
     def __init__(self, config_file):
         # Initialize with default configuration
         self.pr_labels = self.DEFAULT_PR_LABELS
-
+        self.skip_changelog_label = None
         self.user_raw_config = self.get_user_config(config_file)
 
         self.validate_configuration()
@@ -305,6 +305,7 @@ class ChangelogCIConfiguration:
             return
 
         self.validate_pr_labels()
+        self.skip_changelog_label = self.user_raw_config.get('skip_changelog_label')
 
     def validate_pr_labels(self):
         """Validate and set pr_labels configuration option"""
