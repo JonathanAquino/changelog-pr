@@ -42,7 +42,9 @@ the same places in your repo:
 
 2. Follow the instructions in those files to tweak them.
 
-3. Add a line to your pull request template (pull_request_template.md) to remind people
+3. Add [these labels](https://github.com/JonathanAquino/changelog-pr/issues/labels) to your repo, or update changelog-pr-config.yaml to use your preferred labels.
+
+4. Add a line to your pull request template (pull_request_template.md) to remind people
 to set a label:
 
 - [ ] Label your PR for the changelog: skip-changelog, breaking-changes, new-feature, enhancement, bug, implementation-changes
