@@ -17,3 +17,4 @@ pr_labels:
   - bug
   # Add a description to this label on GitHub: "Changes to algorithms or methodologies"
   - implementation-changes
+  # If you modify any of these labels, please also update the labels in verify-pr-labels.yaml
