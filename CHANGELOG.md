@@ -1,9 +1,12 @@
 This is an automatically generated changelog by JonathanAquino/changelog-pr.
 Ensure that your PRs have one or more of the following labels:
 breaking-changes, new-feature, enhancement, bug, implementation-changes.
-Last generated on: 2021-09-18T06:29:21Z
+Last generated on: 2021-09-20T23:57:08Z
 
 --- DO NOT MODIFY THIS HEADER ---
+
+## [#20](https://github.com/JonathanAquino/changelog-pr/pull/20) (2021-09-20)
+- [choose PR label: skip-changelog, breaking-changes, new-feature, enhancement, bug, implementation-changes] Add verify-pr-labels workflow
 
 ## [#19](https://github.com/JonathanAquino/changelog-pr/pull/19) (2021-09-18)
 - [enhancement] If there is no changelog yet, get PRs merged in the last 15 minutes
