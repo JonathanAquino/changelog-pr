@@ -1,4 +1,4 @@
-# Workflow for automated changelog generation using JonathanAquino/changelog-pr.
+# This workflow adds the PR title to the changelog after the PR is merged.
 name: Changelog PR
 
 on:
