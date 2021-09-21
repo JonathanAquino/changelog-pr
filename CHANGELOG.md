@@ -1,7 +1,7 @@
 This is an automatically generated changelog by JonathanAquino/changelog-pr.
 Ensure that your PRs have one or more of the following labels:
 breaking-changes, new-feature, enhancement, bug, implementation-changes.
-Last generated on: 2021-09-20T23:57:08Z
+Last generated on: 2021-09-21T00:03:19Z
 
 --- DO NOT MODIFY THIS HEADER ---
 
