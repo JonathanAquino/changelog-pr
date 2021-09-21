@@ -34,17 +34,22 @@ the `CHANGELOG.md` (or user-provided filename) file and commits it to main/maste
 
 ## Installation
 
-1. To install this action, you need to copy the following two files into
+1. To install this action, you need to copy the following three files into
 the same places in your repo:
 
 - [.github/workflows/changelog-pr.yaml](https://github.com/JonathanAquino/changelog-pr/blob/main/.github/workflows/changelog-pr.yaml)
+- [.github/workflows/verify-pr-labels.yaml](https://github.com/JonathanAquino/changelog-pr/blob/main/.github/workflows/verify-pr-labels.yaml)
 - [changelog-pr-config.yaml](https://github.com/JonathanAquino/changelog-pr/blob/main/changelog-pr-config.yaml)
 
-2. Follow the instructions in those files to tweak them.
+2. If you haven't already, turn on branch protection on your main/master branch with the
+   "Require status checks to pass before merging" option. This will allow the verify-pr-labels
+   workflow to fail the PR if it doesn't have a changelog PR label.
 
-3. Add [these labels](https://github.com/JonathanAquino/changelog-pr/issues/labels) to your repo, or update changelog-pr-config.yaml to use your preferred labels.
+3. Follow the instructions in those files to tweak them.
 
-4. Add a line to your pull request template (pull_request_template.md) to remind people
+4. Add [these labels](https://github.com/JonathanAquino/changelog-pr/issues/labels) to your repo, or update changelog-pr-config.yaml to use your preferred labels.
+
+5. Add a line to your pull request template (pull_request_template.md) to remind people
 to set a label:
 
 - [ ] Label your PR for the changelog: skip-changelog, breaking-changes, new-feature, enhancement, bug, implementation-changes
