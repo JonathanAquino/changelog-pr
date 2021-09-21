@@ -49,11 +49,6 @@ the same places in your repo:
 
 4. Add [these labels](https://github.com/JonathanAquino/changelog-pr/issues/labels) to your repo, or update changelog-pr-config.yaml to use your preferred labels.
 
-5. Add a line to your pull request template (pull_request_template.md) to remind people
-to set a label:
-
-- [ ] Label your PR for the changelog: skip-changelog, breaking-changes, new-feature, enhancement, bug, implementation-changes
-
 If all is well, your next PR merge should result in a new action appearing in your repo's
 Actions tab in GitHub.
 
