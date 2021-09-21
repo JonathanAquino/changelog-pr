@@ -1,5 +1,5 @@
 # This workflow will be verify that all PRs have a valid changelog label
-# before they can be merged. This is a prerequisite fpr the changelog-pr.yaml workflow.
+# before they can be merged. This is a prerequisite for the changelog-pr.yaml workflow.
 
 name: Verify PR labels
 on:
