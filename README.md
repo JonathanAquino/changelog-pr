@@ -43,7 +43,7 @@ the same places in your repo:
 
 2. If you haven't already, turn on branch protection on your main/master branch with the
    "Require status checks to pass before merging" option. This will allow the verify-pr-labels
-   workflow to fail the PR if it doesn't have a changelog PR label.
+   workflow to fail the PR if it doesn't have a changelog-pr label.
 
 3. Follow the instructions in those files to tweak them.
 
