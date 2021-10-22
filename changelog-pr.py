@@ -109,8 +109,9 @@ class ChangelogCIBase:
         subprocess.run(['ssh', '-T', 'git@github.com'])
 
         subprocess.run(['git', 'add', self.filename])
+        # [skip ci] instructs Buildkite to ignore the commit and not create a build.
         subprocess.run(
-            ['git', 'commit', '-m', '(Changelog PR) Added Changelog']
+            ['git', 'commit', '-m', '(Changelog PR) Added Changelog', '-m', '[skip ci]']
         )
         subprocess.run(
             ['git', 'push', '-u', 'origin', self.current_branch]
