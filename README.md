@@ -3,7 +3,7 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/JonathanAquino/changelog-pr/Changelog%20PR?label=Changelog%20PR&style=flat-square)
 [![GitHub](https://img.shields.io/github/license/JonathanAquino/changelog-pr?style=flat-square)](https://github.com/JonathanAquino/changelog-pr/blob/master/LICENSE)
 
-## What is Changelog PR?
+## What is Changelog PR??
 
 Changelog PR is a GitHub Action that enables a project to utilize an
 automatically generated changelog. Unlike similar GitHub Actions, this tool
